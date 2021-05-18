@@ -1,6 +1,12 @@
 html{
     background-color: gray;
 }
+body{
+    margin: 5rem;
+    padding: 2rem;
+    
+    
+}
 .taskpage{
     /* display: inline-flex; */
     /* display: flex; */
@@ -13,6 +19,7 @@ html{
 }
 .homepage{
     display: flex;
+    
     justify-content:space-between;
     align-items: flex-start;
     flex-direction: row;
@@ -43,7 +50,7 @@ html{
     flex-direction: column;
 }
 .add{
-    margin: left 200px;
+    margin-left: 3rem;
 }
 h1{
     margin-left: 500px;
