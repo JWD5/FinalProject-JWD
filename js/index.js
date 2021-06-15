@@ -6,6 +6,9 @@ let assigned = document.querySelector('#assigned');
 let duedate = document.querySelector('#duedate');
 let status = document.querySelector('#status');
 let confirmButton = document.querySelector('#confirmButton');
+let closeButton = document.querySelector('#closeButton');
+let exampleModal = document.querySelector('#exampleModal');
+let mainPage = document.querySelector('#mainPage');
 
 //Object Instance to the class
 const taskManager = new TaskManager(0);
@@ -39,7 +42,7 @@ function validate() {
         toAddTasks();
         reset();
     }
-}
+ }
 function reset() 
     {
          formNameField.value = "" ;
@@ -48,18 +51,25 @@ function reset()
          duedate.value = "";
          status.value = "";
      }
-     
+ function close() {
+     console.log("In close function");
+     exampleModal.innerHTML = mainPage.innerHTML;
+
+ }    
 function toAddTasks() 
 {
-        //const taskManager = new TaskManager(0);
-        console.log(taskManager);  
-        //console.log(taskManager.incrementID());
-       taskManager.addTask(formNameField.value,descriptionField.value,assigned.value,duedate.value,status.value);
-        console.log(taskManager.tasks);
+        
+        //console.log(taskManager);  
+        taskManager.addTask(formNameField.value,descriptionField.value,assigned.value,duedate.value,status.value);
+        //console.log(taskManager.tasks);
+        close();
+        taskManager.render();
+        //console.log(duedate.value);
         
 }
 
 confirmButton.addEventListener('click', validate);
 confirmButton.addEventListener('click',(e)=>{e.preventDefault();});
 
-
+//const taskHtml = createTaskHtml("shobha","student","havanur","21/12/2021","review");
+//console.log(taskHtml);
