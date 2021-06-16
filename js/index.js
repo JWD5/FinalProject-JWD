@@ -7,8 +7,8 @@ let duedate = document.querySelector('#duedate');
 let status = document.querySelector('#status');
 let confirmButton = document.querySelector('#confirmButton');
 let closeButton = document.querySelector('#closeButton');
-let exampleModal = document.querySelector('#exampleModal');
-let mainPage = document.querySelector('#mainPage');
+//let myModal = document.querySelector('#exampleModal');
+var myModal = new bootstrap.Modal(document.getElementById('exampleModal')); 
 
 //Object Instance to the class
 const taskManager = new TaskManager(0);
@@ -39,8 +39,12 @@ function validate() {
         errMsg.style.color = "red";
     } else {
         errMsg.innerHTML = "";
+        //alert(myModal);
+        myModal.hide();
+
         toAddTasks();
         reset();
+       
     }
  }
 function reset() 
@@ -59,17 +63,12 @@ function reset()
 function toAddTasks() 
 {
         
-        //console.log(taskManager);  
         taskManager.addTask(formNameField.value,descriptionField.value,assigned.value,duedate.value,status.value);
-        //console.log(taskManager.tasks);
-        close();
+       // close();
         taskManager.render();
-        //console.log(duedate.value);
-        
+                
 }
 
 confirmButton.addEventListener('click', validate);
 confirmButton.addEventListener('click',(e)=>{e.preventDefault();});
 
-//const taskHtml = createTaskHtml("shobha","student","havanur","21/12/2021","review");
-//console.log(taskHtml);
