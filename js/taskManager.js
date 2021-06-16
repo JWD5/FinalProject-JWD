@@ -1,16 +1,79 @@
+
+class TaskManager {
+    constructor(current_id = 0) {
+            this._tasks = [];
+            this._current_id = current_id;
+    }
+     get tasks() {
+         return this._tasks;
+     }
+     get current_id() {
+         return this._current_id;
+     }
+     addTask(name,description,assignedTo,dueDate,status) 
+    {
+        const taskList = {
+            id: this._current_id++,
+            name: name,
+            description: description,
+            assignedTo: assignedTo,
+            dueDate: dueDate,
+            status: status,
+        };
+        
+        this._tasks.push(taskList);
+        console.log(taskList);
+        //console.log("Array is ");
+        //console.log(this._tasks);
+        
+    }
+
+ //Render method to display tasks   
+    render()
+     {
+        let tasksHtmlList = [];
+        //console.log(this._tasks.length);
+         for (let i = 0; i < this._tasks.length; i++) 
+         {
+          const myTask = this._tasks[i];
+          console.log(myTask);
+           console.log(myTask.name);
+         
+       const date = new Date(myTask.dueDate);
+       const month = date.toLocaleString('default', {month: 'short'});
+       //console.log(month);
+    //    today.toLocaleString('default', { month: 'short' })
+    const formattedDate = date.getDate() + "/" + month + "/" + date.getFullYear();
+    
+         //console.log(myTask);
+         console.log(formattedDate);
+             const taskHtml = createTaskHtml(myTask.name,myTask.description,myTask.assignedTo,formattedDate,myTask.status);
+          
+           tasksHtmlList.push(taskHtml);
+           console.log(tasksHtmlList);
+         }
+        const tasksHtml = tasksHtmlList.join("\n");
+  //      console.log(tasksHtml);
+         const tasksList = document.querySelector('#task_list');
+         tasksList.innerHTML = tasksHtml;
+      }    
+        
+}
+
 function createTaskHtml(name,description,assignedTo,dueDate,status) 
-{
-    const html = ` <li class="card" style="min-width: 50vw">
+ {
+   console.log(name);
+    const html = `<li class="card" style="min-width: 50vw">
     <div class="card-body">
-      <h5 class="card-title">${name}</h5>
-      <p class="card-text">
+      <h5 class="card-title">Name : ${name}</h5>
+      <p class="card-text"> Description : 
         ${description}
       </p>
-      <p class="card-text">${assignedTo} To</p>
-      <p class="card-text">${dueDate}</p>
+      <p class="card-text">Assigned To : ${assignedTo} </p>
+      <p class="card-text">Due Date: ${dueDate}</p>
       <div class="card-footer row">
         <div class="col-6">
-          <p class="card-text"><b>${status}</b></p>
+          <p class="card-text"><b>Status of the Task is : ${status}</b></p>
         </div>
         <div class="col-3">
           <button class="btn btn-outline-success done-button">
@@ -25,60 +88,6 @@ function createTaskHtml(name,description,assignedTo,dueDate,status)
       </div>
     </div>
   </li>`;
-    return html;
+ //console.log(html);
+  return html;
 }
-class TaskManager {
-    constructor(current_id = 0) {
-            this._tasks = [];
-            this._current_id = current_id;
-    }
-     get tasks() {
-         return this._tasks;
-     }
-     get current_id() {
-         return this._current_id;
-     }
-     addTask(firstName,description,assignedTo,dueDate,taskStatus) 
-    {
-        const taskList = {
-            incrementID : this._current_id ++,
-            firstName : firstName,
-            description : description,
-            assignedTo : assignedTo,
-            dueDate : dueDate,
-            taskStatus : taskStatus,
-        };
-        console.log(this._tasks);
-        this._tasks.push({taskList});
-        // for(let i=0;i<this._tasks.length;i++) {
-       console.log("tasks added are" + this._tasks); 
-       console.log(taskList);
-        // }
-        //console.log(dueDate);
-    }
-
- //Render method to display tasks   
-    render() {
-        console.log("in render function");
-        const tasksHtmlList = [];
-        for(let i=0; i <= this._tasks.length ; i++) {
-            let currentTask = this._tasks[i];
-            const dateVar = new Date(this.dueDate);
-            const formattedDate = dateVar.getDate() + "/" + (dateVar.getMonth() + 1) + "/" + dateVar.getFullYear();
-            console.log("Formatted date is " + formattedDate);
-            const taskHtml = createTaskHtml(
-                currentTask.firstName ,
-                currentTask.description , 
-                currentTask.assignedTo , 
-                formattedDate, 
-                currentTask.status);
-        
-        tasksHtmlList.push(taskHtml);
-        }
-        const tasksHtml = tasksHtmlList.join("\n");
-        const task_list = document.querySelector('#task_list');
-        task_list.innerHTML = tasksHtml;
-        console.log("Tasks HTML List is " + tasksHtmlList);
-    }
-}       
-
