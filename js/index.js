@@ -7,8 +7,9 @@ let duedate = document.querySelector('#duedate');
 let status = document.querySelector('#status');
 let confirmButton = document.querySelector('#confirmButton');
 let closeButton = document.querySelector('#closeButton');
-//let myModal = document.querySelector('#exampleModal');
 var myModal = new bootstrap.Modal(document.getElementById('exampleModal')); 
+let taskDone = document.querySelector('#task_list');
+
 
 //Object Instance to the class
 const taskManager = new TaskManager(0);
@@ -66,9 +67,44 @@ function toAddTasks()
         taskManager.addTask(formNameField.value,descriptionField.value,assigned.value,duedate.value,status.value);
        // close();
         taskManager.render();
+        taskManager.getTaskById(0);
                 
 }
 
 confirmButton.addEventListener('click', validate);
 confirmButton.addEventListener('click',(e)=>{e.preventDefault();});
+
+// Done button event
+taskDone.addEventListener('click', (event) => {
+        if(event.target.classList.contains("done-button"))
+         {
+        //console.log("When done button is clicked");
+        const parentTask = event.target.parentElement.parentElement.parentElement.parentElement;
+        console.log(parentTask);
+        const taskId = Number(parentTask.dataset.taskId);
+        const task = taskManager.getTaskById(taskId);
+        task.status = "Done";
+       let hideDone = document.getElementById('doneId');
+        //console.log(hideDone.id);
+          console.log(hideDone.classList.value);
+           if(hideDone.classList.contains('visible')) 
+            {
+              hideDone.classList.remove('visible');
+               hideDone.classList.add('invisible');
+          
+             } else {
+                 hideDone.classList.add('visible');
+                 hideDone.classList.remove('invisible');
+             }
+          console.log(hideDone.classList.value);
+          taskManager.render();
+         }
+});
+ 
+
+
+
+
+
+
 
