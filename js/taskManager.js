@@ -10,6 +10,7 @@ class TaskManager {
      get current_id() {
          return this._current_id;
      }
+    
      addTask(name,description,assignedTo,dueDate,status) 
     {
         const taskList = {
@@ -69,12 +70,30 @@ class TaskManager {
           console.log(foundTask);
           return foundTask;
       }   
-       
-}
+      // To add data to Local Storage
+      save() {
+        var tasksJson = JSON.stringify(this._tasks);
+        localStorage.setItem("tasks", tasksJson);
+        var currentId = JSON.stringify(this._current_id);
+        localStorage.setItem("currentId" ,currentId);
+      }
 
+      // Retrieving data from Local Storage
+      load() {
+         // console.log("in Load function");
+        const tasksJson = localStorage.getItem("tasks") || [];
+        this._tasks = JSON.parse(tasksJson);
+        const currentId = localStorage.getItem("currentId");
+        this._current_id = JSON.parse(currentId);
+        // console.log(this._tasks);
+        // console.log(this._current_id);
+      }
+
+}
 function createTaskHtml(id,name,description,assignedTo,dueDate,status) 
  {
-   console.log(name);
+    console.log(status);
+    console.log(name);
     const html = `<li class="card" data-task-id="${id}" style="min-width: 50vw">
     <div class="card-body">
       <h5 class="card-title">Name : ${name}</h5>
@@ -88,7 +107,11 @@ function createTaskHtml(id,name,description,assignedTo,dueDate,status)
           <p class="card-text"><b>Status of the Task is : ${status}</b></p>
         </div>
         <div class="col-3">
-          <button class="btn btn-outline-success visible done-button" id="doneId">
+        <button class="btn btn-outline-success done-button ${
+            status === "todo" || status === "progress" || status === "review"
+              ? "visible"
+              : "invisible"
+          }" id="doneId">
             Done
           </button>
         </div>
