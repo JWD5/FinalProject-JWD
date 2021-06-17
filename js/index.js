@@ -13,6 +13,8 @@ let taskDone = document.querySelector('#task_list');
 
 //Object Instance to the class
 const taskManager = new TaskManager(0);
+taskManager.load();
+taskManager.render();
 
 function validate() {
     
@@ -67,6 +69,7 @@ function toAddTasks()
         taskManager.addTask(formNameField.value,descriptionField.value,assigned.value,duedate.value,status.value);
        // close();
         taskManager.render();
+        taskManager.save();
         taskManager.getTaskById(0);
                 
 }
@@ -98,6 +101,7 @@ taskDone.addEventListener('click', (event) => {
              }
           console.log(hideDone.classList.value);
           taskManager.render();
+          taskManager.save();
          }
 });
  
