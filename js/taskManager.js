@@ -22,7 +22,7 @@ class TaskManager {
         };
         
         this._tasks.push(taskList);
-        console.log(taskList);
+//        console.log(taskList);
         //console.log("Array is ");
         //console.log(this._tasks);
         
@@ -41,29 +41,41 @@ class TaskManager {
          
        const date = new Date(myTask.dueDate);
        const month = date.toLocaleString('default', {month: 'short'});
-       //console.log(month);
-    //    today.toLocaleString('default', { month: 'short' })
-    const formattedDate = date.getDate() + "/" + month + "/" + date.getFullYear();
+      const formattedDate = date.getDate() + "/" + month + "/" + date.getFullYear();
     
          //console.log(myTask);
          console.log(formattedDate);
-             const taskHtml = createTaskHtml(myTask.name,myTask.description,myTask.assignedTo,formattedDate,myTask.status);
-          
+             const taskHtml = createTaskHtml(myTask.id,myTask.name,myTask.description,myTask.assignedTo,formattedDate,myTask.status);
+         
            tasksHtmlList.push(taskHtml);
-           console.log(tasksHtmlList);
+    //       console.log(tasksHtmlList);
          }
         const tasksHtml = tasksHtmlList.join("\n");
   //      console.log(tasksHtml);
          const tasksList = document.querySelector('#task_list');
          tasksList.innerHTML = tasksHtml;
-      }    
-        
+      } 
+      // Getting the task with Status Done
+      getTaskById(taskId) 
+      {
+        console.log("in get task function");
+          let foundTask;
+          for(let i=0; i< this._tasks.length; i++) {
+              const task = this._tasks[i];
+              if(task.id == taskId) {
+                  foundTask = task;
+              }
+          }
+          console.log(foundTask);
+          return foundTask;
+      }   
+       
 }
 
-function createTaskHtml(name,description,assignedTo,dueDate,status) 
+function createTaskHtml(id,name,description,assignedTo,dueDate,status) 
  {
    console.log(name);
-    const html = `<li class="card" style="min-width: 50vw">
+    const html = `<li class="card" data-task-id="${id}" style="min-width: 50vw">
     <div class="card-body">
       <h5 class="card-title">Name : ${name}</h5>
       <p class="card-text"> Description : 
@@ -76,7 +88,7 @@ function createTaskHtml(name,description,assignedTo,dueDate,status)
           <p class="card-text"><b>Status of the Task is : ${status}</b></p>
         </div>
         <div class="col-3">
-          <button class="btn btn-outline-success done-button">
+          <button class="btn btn-outline-success visible done-button" id="doneId">
             Done
           </button>
         </div>
