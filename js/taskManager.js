@@ -92,11 +92,9 @@ class TaskManager {
 }
 function createTaskHtml(id,name,description,assignedTo,dueDate,status) 
  {
-    console.log(status);
-    console.log(name);
     const html = `<li class="card" data-task-id="${id}" style="min-width: 50vw">
     <div class="card-body">
-      <h5 class="card-title">Name : ${name}</h5>
+       <h5 class="card-title">Name : ${name}</h5>
       <p class="card-text"> Description : 
         ${description}
       </p>
