@@ -87,21 +87,19 @@ taskDone.addEventListener('click', (event) => {
         const taskId = Number(parentTask.dataset.taskId);
         const task = taskManager.getTaskById(taskId);
         task.status = "Done";
-       let hideDone = document.getElementById('doneId');
-        //console.log(hideDone.id);
-          console.log(hideDone.classList.value);
-           if(hideDone.classList.contains('visible')) 
-            {
-              hideDone.classList.remove('visible');
-               hideDone.classList.add('invisible');
-          
-             } else {
-                 hideDone.classList.add('visible');
-                 hideDone.classList.remove('invisible');
-             }
-          console.log(hideDone.classList.value);
           taskManager.render();
           taskManager.save();
+         }
+         if(event.target.classList.contains("delete-button")) 
+         {
+             console.log("in delete event");
+            const deleteTask = event.target.parentElement.parentElement.parentElement.parentElement;
+            console.log(deleteTask);
+            const taskId = Number(deleteTask.dataset.taskId)
+            console.log(taskId);
+            taskManager.deleteTask(taskId);
+            taskManager.save();
+            taskManager.render();
          }
 });
  

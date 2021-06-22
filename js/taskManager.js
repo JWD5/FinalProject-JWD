@@ -80,15 +80,31 @@ class TaskManager {
 
       // Retrieving data from Local Storage
       load() {
-         // console.log("in Load function");
-        const tasksJson = localStorage.getItem("tasks") || [];
-        this._tasks = JSON.parse(tasksJson);
-        const currentId = localStorage.getItem("currentId");
-        this._current_id = JSON.parse(currentId);
-        // console.log(this._tasks);
-        // console.log(this._current_id);
+        
+        if (localStorage.getItem("tasks")) 
+        {
+          const tasksJson = localStorage.getItem("tasks") || [];
+         this._tasks = JSON.parse(tasksJson);
+        }
+      if (localStorage.getItem("currentId")) {
+          const currentId = localStorage.getItem("currentId");
+          this._currentId = Number(currentId);
       }
-
+    }
+    // Delete Task function
+    deleteTask(taskId) 
+    {
+      let newTasks = [];
+      for(let i=0; i < this._tasks.length; i++) 
+      {
+        const task = this._tasks[i];
+        
+        if(task.id !== taskId) {
+          newTasks.push(task);
+        }
+      }
+     this._tasks = newTasks; 
+    }
 }
 function createTaskHtml(id,name,description,assignedTo,dueDate,status) 
  {
