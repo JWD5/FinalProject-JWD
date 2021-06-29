@@ -7,9 +7,19 @@ let duedate = document.querySelector('#duedate');
 let status = document.querySelector('#status');
 let confirmButton = document.querySelector('#confirmButton');
 let closeButton = document.querySelector('#closeButton');
+let resetButton = document.querySelector('#resetButton');
 var myModal = new bootstrap.Modal(document.getElementById('exampleModal')); 
 let taskDone = document.querySelector('#task_list');
-
+let today = new Date();
+            var dd = today.getDate();
+           var mm = today.getMonth()+1; 
+           var yyyy = today.getFullYear();
+              if(mm<10) 
+               {
+                   mm='0'+mm;
+               }
+           today = yyyy + "-" + mm + "-" + dd;
+  //  console.log(today);
 
 //Object Instance to the class
 const taskManager = new TaskManager(0);
@@ -37,6 +47,9 @@ function validate() {
         } else if(duedate.value == 0) {
         errMsg.innerHTML = "Select due Date";
         errMsg.style.color = "red";
+    } else if(duedate.value < today)  {
+               errMsg.innerHTML = "Please select a valid date";
+               errMsg.style.color = "red";
     } else if(status.value == 'Select Status from') {
         errMsg.innerHTML = "Please select status to the task";
         errMsg.style.color = "red";
@@ -44,7 +57,6 @@ function validate() {
         errMsg.innerHTML = "";
         //alert(myModal);
         myModal.hide();
-
         toAddTasks();
         reset();
        
@@ -60,7 +72,7 @@ function reset()
      }
  function close() {
      console.log("In close function");
-     exampleModal.innerHTML = mainPage.innerHTML;
+     exampleModal.innerHTML = window.location.assign(window.location.href);
 
  }    
 function toAddTasks() 
@@ -76,7 +88,7 @@ function toAddTasks()
 
 confirmButton.addEventListener('click', validate);
 confirmButton.addEventListener('click',(e)=>{e.preventDefault();});
-
+resetButton.addEventListener('click',reset);
 // Done button event
 taskDone.addEventListener('click', (event) => {
         if(event.target.classList.contains("done-button"))
@@ -87,16 +99,16 @@ taskDone.addEventListener('click', (event) => {
         const taskId = Number(parentTask.dataset.taskId);
         const task = taskManager.getTaskById(taskId);
         task.status = "Done";
-          taskManager.render();
+         taskManager.render();
           taskManager.save();
          }
          if(event.target.classList.contains("delete-button")) 
          {
-             console.log("in delete event");
+            // console.log("in delete event");
             const deleteTask = event.target.parentElement.parentElement.parentElement.parentElement;
             console.log(deleteTask);
             const taskId = Number(deleteTask.dataset.taskId)
-            console.log(taskId);
+            //console.log(taskId);
             taskManager.deleteTask(taskId);
             taskManager.save();
             taskManager.render();
