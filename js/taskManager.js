@@ -23,10 +23,6 @@ class TaskManager {
         };
         
         this._tasks.push(taskList);
-//        console.log(taskList);
-        //console.log("Array is ");
-        //console.log(this._tasks);
-        
     }
 
  //Render method to display tasks   
